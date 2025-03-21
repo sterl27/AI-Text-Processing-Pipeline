@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ai-text-processing.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "ai-text-processing.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "ai-text-processing.name" . }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8888
+          env:
+            - name: OPENAI_API_KEY
+              value: "{{ .Values.env.OPENAI_API_KEY }}"
+            - name: PINECONE_API_KEY
+              value: "{{ .Values.env.PINECONE_API_KEY }}"
+            - name: PINECONE_ENV
+              value: "{{ .Values.env.PINECONE_ENV }}"

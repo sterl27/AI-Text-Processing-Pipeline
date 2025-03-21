@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: your-dockerhub-username/ai-text-processing
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+
+env:
+  OPENAI_API_KEY: ""
+  PINECONE_API_KEY: ""
+  PINECONE_ENV: "us-west1-gcp"
+
+resources: {}
